@@ -1,10 +1,14 @@
 ## Python Execution Test
 
 Command:
+```bash
 python3 hello.py
+```
 
 Output:
+```bash
 hello world
+```
 
 Observation:
 - Python executes scripts directly without compilation.
