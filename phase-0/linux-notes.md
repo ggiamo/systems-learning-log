@@ -88,3 +88,15 @@ This separates:
 - selected snapshot (stage)
 - saved history (commit)
 - remote sync (push)
+
+## Bash
+
+Bash is a shell used to interact with Linux through terminal commands.
+
+The shell:
+- accepts user commands
+- located executables
+- starts programs
+- displays output
+
+Markdown code blocks labeled with `bash` are only for syntax highling and do not execute commands themselves.
