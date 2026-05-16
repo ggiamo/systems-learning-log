@@ -35,3 +35,56 @@ At this stage I am learning:
 - development environment workflow
 
 The focus is becoming comfortable operating inside a Linux development environment rather than building advanced software yet.
+
+
+## Git Workflow Concept
+
+The standard Git workflow is:
+
+Edit -> Stage -> Commit -> Push
+
+---
+
+### 1. Check repository status
+
+git status
+
+Shows what files have been modified, added, or are untracked
+
+---
+
+### 2. Stage changes
+
+git add .
+
+Adds all current changes in the directory to the staging area.
+
+(You can also stage specific files:)
+git add filename.md
+
+### 3. Commit changes
+
+git commit -m "your message here"
+
+Creates a snapshot of the staged changes in local Git history.
+
+Example:
+git commit -m "add Phase 0 Linux notes"
+
+### 4. Push to GitHub
+
+git push
+
+Uploads committed changes to the remote repository on GitHub.
+
+---
+
+### Key idea
+
+Edit -> git add -> git commit -> git push
+
+This separates:
+- working changes (edit)
+- selected snapshot (stage)
+- saved history (commit)
+- remote sync (push)
