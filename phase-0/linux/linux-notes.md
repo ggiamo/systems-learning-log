@@ -1,30 +1,55 @@
 # Linux notes
 
 ## Virtual Machine Observation
+
 The Ubuntu VM behaves like a separate computer despite running inside my host operating system. Ubuntu inside the VM has its own filesystem, processes, memory space, and virtual hardware. The VM exists in an isolated environment that can be reset using snapshots if something breaks.
+
 ---
+
 ## NAT Networking Observation
+
 The VM network adapter is configured to use NAT. NAT allows the VM to access the internet while remaining hidden behind the host machine. The VM is not directly exposed on the local netwowrk like a bridged adapter would be. This reduces accidental exposure and creates a safer beginner environment.
+
 ---
+
 ## Linux Filesystem Observation
+
 Linux organizes files beginning at the root directory '/'. Unlike Windows drive letters, Linux presents the filesystem as one unified hierarchy. Directories such as '/home', '/bin', and '/etc' each serve different system purposes.
+
 ---
+
 ## Terminal Observation
+
 Commands typed into the terminal are executable programs. The shell interprets input, locates executables using the PATH environment variable, and launches processes. I initially assumed commands were built directly into Linux itself, but many commands are separate executable files stored in directories such as '/bin'.
+
 ---
+
 ## Git Observation
+
 Git is a local version-control system. It tracks changes to files by storing repository history and metadata inside the hidden '.git' directory. GitHub is a separate online hosting platform that can store remote copies of Git repositories. A repository does not become public automatically. Files are only uploaded when commits are pushed to a remote repository.
+
 ---
+
 ## .gitignore Observation
+
 A '.gitignore' file tells Git which files should not be tracked. This helps prevent temporary files, compiled binaries, cache files, and sensitive information from being committed into repository history. The file does not delete anything. It only tells Git to ignore matching files unless explicitly added.
+
 ---
+
 ## GCC Observation
+
 GCC complies C source code into native machine code executables. The compilation process transforms human-readable source code into binaries that the CPU can execute directly. Compiled executables are different from scripts because the operating system can load and run them directly. 
+
 ---
+
 ## VS Code Observation
+
 VS Code is a development environment and text editor. It edits files stored on disk but does not replace the Linux terminal or operating system. Git tracks changes made to files edited inside VS Code. 
+
 ---
+
 ## Current Understanding
+
 At this stage I am learning: 
 - Linux filesystem structure
 - terminal navigation
@@ -35,6 +60,8 @@ At this stage I am learning:
 - development environment workflow
 
 The focus is becoming comfortable operating inside a Linux development environment rather than building advanced software yet.
+
+---
 
 
 ## Git Workflow Concept
@@ -47,7 +74,9 @@ Edit -> Stage -> Commit -> Push
 
 ### 1. Check repository status
 
+```bash
 git status
+```
 
 Shows what files have been modified, added, or are untracked
 
@@ -55,7 +84,9 @@ Shows what files have been modified, added, or are untracked
 
 ### 2. Stage changes
 
+```bash
 git add .
+```
 
 Adds all current changes in the directory to the staging area.
 
@@ -64,7 +95,9 @@ git add filename.md
 
 ### 3. Commit changes
 
+```bash
 git commit -m "your message here"
+```
 
 Creates a snapshot of the staged changes in local Git history.
 
@@ -73,11 +106,12 @@ git commit -m "add Phase 0 Linux notes"
 
 ### 4. Push to GitHub
 
+```bash
 git push
+```
 
 Uploads committed changes to the remote repository on GitHub.
 
----
 
 ### Key idea
 

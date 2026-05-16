@@ -10,7 +10,9 @@ The terminal is not the operating system itself. It is a program (shell) that in
 
 When I type something like:
 
+```bash
 ls
+```
 
 The shell:
 1. Reads the input

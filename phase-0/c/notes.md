@@ -1,13 +1,19 @@
 ## C Compilation Test
 
 Command:
+```bash
 gcc hello.c -o hello
+```
 
 Run:
+```bash
 ./hello
+```
 
 Output:
+```bash
 hello world
+```
 
 Observation:
 - C is a compiled language.
