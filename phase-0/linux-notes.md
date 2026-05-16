@@ -1,4 +1,4 @@
-#Linux notes
+# Linux notes
 
 ## Virtual Machine Observation
 The Ubuntu VM behaves like a separate computer despite running inside my host operating system. Ubuntu inside the VM has its own filesystem, processes, memory space, and virtual hardware. The VM exists in an isolated environment that can be reset using snapshots if something breaks.
