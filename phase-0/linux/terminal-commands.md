@@ -1,206 +1,178 @@
-# Terminal Commands (Conceptual Understanding)
+Working context
+- all commands are executed inside:
 
-## What a terminal is
-
-The terminal is not the operating system itself. It is a program (shell) that interprets text input and runs other programs. When I type a command, I am not interacting directly with Linux. I am interacting with a shell that finds and launches programs.
+```bash
+~/projects/systems-learning-log/phase-0
+```
 
 ---
 
-## How commands work
+`pwd` - current location
 
-When I type something like:
+Input:
+```bash
+pwd
+```
+Output:
+```bash
+/home/user/projects/systems-learning-log/phase-0
+```
+Observation:
+- Displays the absolute path of the current working directory
 
+---
+
+`cd` - directory navigation
+
+Input:
+```bash 
+cd linux
+pwd
+```
+Output:
+```bash
+/home/user/projects/systems-learning-log/phase-0/linux
+```
+Observation:
+- Changes process working directory; does not modify filesystem structure
+
+---
+
+`ls` - directory listing
+
+Input:
 ```bash
 ls
 ```
-
-The shell:
-1. Reads the input
-2. Searches for an executable file named "ls"
-3. Looks in directories listed in the PATH environment variable
-4. Runs the program as a separate process
-
----
-
-## Key observation
-
-Commands are not built into Linux as a single system. They are separate programs stored in the filesystem (often in /bin or /usr/bin).
-
----
-
-## PATH concept
-
-PATH is a list of directories the shell searches when I type a command. Without PATH, the shell would not know where to find programs unless I gave full file paths. 
-
----
-
-## Important realization
-
-The terminal is a command interpreter, not a system interface. It converts text into process execution.
-
----
-
-### Commands
-
-echo - one of the most basic and frequently used tools in the Linux terminal. Its primary function is to print text or variables to the standard output (usually your screen). 
-
-Basic Usage: To display a simple string of text.
-
-Command:
+Output:
 ```bash
-echo hello world
+c
+linux
+python
+```
+Observation:
+- Shows visible entries in the current directory
+
+---
+
+`ls -l` - detailed listing ("long")
+
+Input:
+```bash
+ls -l linux
+```
+Output:
+```bash
+-rw-r--r-- linux-notes.md
+-rw-r--r-- terminal-commands.md
+-rw-r--r-- toolchain-verification.md
+-rw-r--r-- vm-setup.md
+```
+Observation:
+- Displays file metadata including permissions and file names
+
+---
+
+`ls -a` - include hidden files ("all")
+
+Input:
+```bash
+ls -a linux
+```
+Output:
+```bash
+.
+..
+linux-notes.md
+terminal-commmands.md
+toolchain-verification.md
+vm-setup.md
+```
+Observation:
+- Include hidden directory entries:
+`.` current directory
+`..` parent directory
+
+---
+
+`ls -la` - combined view
+
+Input:
+```bash
+ls -la linux
+```
+Output:
+```bash
+drwxr-xr-x .
+drwxr-xr-x ..
+-rw-r--r-- linux-notes.md
+-rw-r--r-- terminal-commands.md
+-rw-r--r-- toolchain-verification.md
+-rw-r--r-- vm-setup.md
+```
+Observation:
+- Combines:
+detailed metadata (`-l`)
+hidden entries (`a`)
+
+---
+
+`echo` - output to stdout
+
+Input:
+```bash
+echo "hello world"
 ```
 Output:
 ```bash
 hello world
 ```
-
-Printing Variables: It is often used to check the value of environment variables.
-
-Command:
-```bash
-echo $USER
-```
-Output:
-```bash
-user
-```
-
-Creating Files: You can combine `echo` with redirection operators (>) to quickly create or overwrite a file with text.
-
-Command:
-```bash
-echo "New log entry" > note.txt
-```
-Output:
-- Nothing is printed to the terminal.
-- 'echo "New log entry"' prints the text 'New log entry' to standard output.
-- stdout = default output stream of a program; programs write output to stdout, not directly to the screen; terminal reads stdout and displays it
-Normal data flow: program -> stdout -> terminal -> screen
-With redirection: program -> stdout -> file
-- `>` (redirection operator) redirects that output into a file instead of the terminal.
-- `note.txt` is the target file (if `note.txt` does not exist then it is created; if `note.txt` already exists then it is overwritten completely which means that its previous contents are erased)
+Observation:
+- Writes text to standard output stream
 
 ---
 
-pwd ("print working directory") - outputs the absolute path (the full path starting from `/`) of your current location. It is a vital tool for ensuring you are running commands in the correct place.
-
-Command:
-```bash
-pwd
-```
-Output:
-```bash
-/home/user/projects/systems-learning-log
-```
-
----
-
-cd ("change directory") - changes your current working directory.
-
-Special directory references:
-`.` -> current directory (self-reference)
-`..` -> parent directory (one level up in tree)
-`~` -> home directory (user's root workspace)
-`-` -> previous working directory (shell history state)
-
-
-Absolute path navigation:
-
-Base:
-```bash
-cd ~/projects/systems-learning-log/phase-0
-```
+PATH resolution check (conceptual command behavior)
 
 Input:
-```bash
-cd ~/projects/systems-learning-log/phase-0/linux
-pwd
-```
-Output:
-```bash
-/home/user/projects/systems-learning-log/phase-0/linux
-```
-
-Relative path navigation:
-
-Base:
-```bash
-cd ~/projects/systems-learning-log/phase-0
-```
-
-Input:
-```bash
-cd python/hello-world
-pwd
-cd ..
-cd ..
-cd linux/
-pwd
-```
-Output:
-```bash
-/home/user/projects/systems-learning-log/phase-0/linux
-```
----
-
-ls (listing directory contents) - displays files and directories in the current working directory.
-
-Basic usage:
 ```bash
 ls
 ```
-Behavior:
-- Prints visible files and directories in the current working directory
+Observation:
+- Shell behavior:
+resolves `ls` using PATH
+executes external binary
+runs as a separate process
 
-Listing specific paths:
+---
+
+Git status
+
+Input:
 ```bash
-ls /home
+git status
 ```
-Behavior:
-- Lists contents of the specified directory instead of current location
-
-Hidden files:
-- Hidden files start with `.` and are not shown by default
-
+Output:
 ```bash
-ls -a
+On branch main
+nothing to commit, working tree clean
 ```
-Behavior:
-- Includes hidden files and directories
-- Being hidden does not mean it is inaccessible nor requires special permissoins: it merely affects default visibility
+Observation:
+- Displays repository state and uncommitted changes
 
-Long listing format:
-```bash
-ls -l
-```
-Behavior:
-- Displays detailed metadata:
-permissions
-number of links
-owner
-group
-file size
-timestamp
-name
-- `ls -l` exposes filesystem metdata, not just names
+---
 
-Reverse order listing:
-```bash
-ls -r
-```
-Behavior:
-- Reverses alphabetical output order
-- Does not modify filesystem data
+Git staging and commit
 
-Combined flags:
+Input:
 ```bash
-ls -la
-ls -al
-ls -lar
+git add .
+git commit -m "phase 0 update"
 ```
-Behavior:
-`-l` -> detailed view
-`-a` -> include hidden files
-`-r` -> reverse ordering
-- Flags are composable modifiers of a single command behavior
+Output:
+```bash
+[main abc123] phase 0 update
+```
+Observation:
+- `git add` stages commit
+- `git commit` records snapshot in history

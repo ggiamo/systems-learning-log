@@ -1,203 +1,171 @@
-# Linux notes
+## Virtual Machine Model
 
-## Virtual Machine Observation
+A virtual machine behaves like a complete computer running inside another operating system.
 
-The Ubuntu VM behaves like a separate computer despite running inside my host operating system. Ubuntu inside the VM has its own filesystem, processes, memory space, and virtual hardware. The VM exists in an isolated environment that can be reset using snapshots if something breaks.
+Key properties:
+- Separate filesystem
+- Separate process table
+- Isolated memory space
+- Virtualized hardware devices
 
----
-
-## NAT Networking Observation
-
-The VM network adapter is configured to use NAT. NAT allows the VM to access the internet while remaining hidden behind the host machine. The VM is not directly exposed on the local netwowrk like a bridged adapter would be. This reduces accidental exposure and creates a safer beginner environment.
-
----
-
-## Linux Filesystem Observation
-
-Linux organizes files beginning at the root directory '/'. Unlike Windows drive letters, Linux presents the filesystem as one unified hierarchy. Directories such as '/home', '/bin', and '/etc' each serve different system purposes.
+This isolation means:
+- crashes are contained inside the VM
+- snapshots allow full system rollback
+- host system is unaffected by internal VM state
 
 ---
 
-## Terminal Observation
+## Networking Model (NAT)
 
-Commands typed into the terminal are executable programs. The shell interprets input, locates executables using the PATH environment variable, and launches processes. I initially assumed commands were built directly into Linux itself, but many commands are separate executable files stored in directories such as '/bin'.
+The VM uses NAT (Network Address Translation).
 
----
+Behavior:
+- VM shares host's network connection
+- VM is not directly visible on the local network
+- outbound connections are allowed
+- inbound connections are restricted unless explicitly configured
 
-## Git Observation
-
-Git is a local version-control system. It tracks changes to files by storing repository history and metadata inside the hidden '.git' directory. GitHub is a separate online hosting platform that can store remote copies of Git repositories. A repository does not become public automatically. Files are only uploaded when commits are pushed to a remote repository.
-
----
-
-## .gitignore Observation
-
-A '.gitignore' file tells Git which files should not be tracked. This helps prevent temporary files, compiled binaries, cache files, and sensitive information from being committed into repository history. The file does not delete anything. It only tells Git to ignore matching files unless explicitly added.
+Implication:
+- safer default for experimentation
+- reduced exposure compared to bridged networking
 
 ---
 
-## GCC Observation
+## Linux Filesystem Model
 
-GCC complies C source code into native machine code executables. The compilation process transforms human-readable source code into binaries that the CPU can execute directly. Compiled executables are different from scripts because the operating system can load and run them directly. 
+Linux uses a single hierarchical filesystem rooted at `/`.
 
----
+Core principle:
+- everything is part of one tree structure
 
-## VS Code Observation
+Important clarification:
+- directories are not "containers" in a physical sense
+- they are mappings from names -> filesystem metadata (inodes)
 
-VS Code is a development environment and text editor. It edits files stored on disk but does not replace the Linux terminal or operating system. Git tracks changes made to files edited inside VS Code. 
-
----
-
-## Current Understanding
-
-At this stage I am learning: 
-- Linux filesystem structure
-- terminal navigation
-- virtual machine isolation
-- Git repositories
-- local vs remote repositories
-- compilation basics
-- development environment workflow
-
-The focus is becoming comfortable operating inside a Linux development environment rather than building advanced software yet.
+Common system directories:
+- `/bin` -> essential executable programs
+- `/etc` -> system configuration files
+- `/home` -> user-specific files and workspaces
+- `/var` -> variable runtime data (logs, caches, system state)
 
 ---
 
+## Path System
 
-## Git Workflow Concept
+A path describes how to locate a file in the filesystem tree. 
 
-The standard Git workflow is:
+Types:
+- Absolute path -> starts at `/`, independent of location
+- Relative path -> depends on current working directory
 
-Edit -> Stage -> Commit -> Push
-
----
-
-### 1. Check repository status
-
-```bash
-git status
-```
-
-Shows what files have been modified, added, or are untracked
+Example
+- `/home/user/projects` -> absolute
+- `projects/phase-0` -> relative
 
 ---
 
-### 2. Stage changes
+## Processes and Execution Model
 
-```bash
-git add .
-```
+A process is a running instance of a program.
 
-Adds all current changes in the directory to the staging area.
+When a program executes:
 
-(You can also stage specific files:)
-git add filename.md
+- it becomes a process
+- it is assigned a PID (process ID)
+- it receives its own memory space
 
-### 3. Commit changes
+Key property:
+- processes are isolated from each other unless explicitly connected
 
-```bash
-git commit -m "your message here"
-```
-
-Creates a snapshot of the staged changes in local Git history.
-
-Example:
-git commit -m "add Phase 0 Linux notes"
-
-### 4. Push to GitHub
-
-```bash
-git push
-```
-
-Uploads committed changes to the remote repository on GitHub.
-
-
-### Key idea
-
-Edit -> git add -> git commit -> git push
-
-This separates:
-- working changes (edit)
-- selected snapshot (stage)
-- saved history (commit)
-- remote sync (push)
+Parent-child relationship:
+- a shell creates child processes when launching commands
 
 ---
 
-## Bash
+## Shell Model (Bash)
 
-A shell is a program that accepts commands and passes them to the operating system to execute. Bash is the default shell used to interact with most Linux distributions through terminal commands. Other shells such as ksh, zsh, and tsch exist.
+A shell is a user-space program that interprets commands.
 
-The shell:
-- accepts user commands
-- locates executables
-- starts programs
-- displays output
+Execution flow:
+1. reads user input
+2. determines command type (bultin or external binary)
+3. resolves external commands using `PATH`
+4. launches processes
+5. returns output to terminal
 
-Markdown code blocks labeled with `bash` are only for syntax highlighting and do not execute commands themselves.
-
----
-
-## The Shell Prompt
-
-When a terminal is opened, the shell prompt will appear. It will usually follow this format: 
-```bash
-username@hostname:current_directory$
-```
-The $ symbol indicates that the terminal is ready to accept commands. 
+Important distinction:
+- a shell is not the same as an operating system
+- a shell is an interface to OS process management
 
 ---
 
-## The Directory Tree in Linux
+## PATH Resolution
 
-Everything in Linux is treated like a file. These files are organized into a logical, branching hierarchy known as the Filesystem Hierarchy Standard (FHS).
+PATH is an ordered list of directories.
 
-The structure begins at a single point of origin called the root directory, represented by a forward slash (/). Every other folder and file branches out from this room, creating a tree-like architecture.
-
-Common top-level directories include:
-- `/bin`: Essential command binaries (short for "binary"; contains the fundamental executable programs like ls, cp, and bash that all users need).
-
-- `/etc`: System-wide configuration files (et cetera; the central hub for system configuration files that dictate how the OS and applications behave).
-
-- `/home`: Personal folders for users (the personal storage space where individual users keep their private documents, settings, and media).
-
-- `/var`: Variable data like logs and temporary files (variable data; a location for files that change constantly during system operation, such has system logs and print spools).
+When a command is typed:
+- shell searches each directory PATH
+- first matching executable is executed
+- if none found -> "command not found"
 
 ---
 
-A path is the specific "address" of a file or folder. It maps the sequence of directories you must traverse to reach a destination.
+## Build and Execution Pipeline (C)
 
-Example:
-```bash
-/home/user/Documents
-```
+C programs follow a compilation pipelie:
 
-- Starts at root (/)
-- Moves into `home`
-- Moves into `user`
-- Ends at `Documents`
+source code ->
+preprocessing ->
+compilation ->
+assembly ->
+linking ->
+ELF binary ->
+OS loader ->
+process execution
 
-Path types:
-
-Absolute path
-- Starts at root `/`
-- Independent of current location
-- Example:
-```bash
-/home/user/systems-learning-log/phase-0/linux
-```
-
-Relative path
-- Interpreted from current directory
-- Depends on shell state
-- Example:
-```bash
-linux/
-```
-
+Key idea:
+- GCC is not execuring code; it produces an executable file
 
 ---
+
+## Python Execution Model
+
+Python is executed through an interpreter.
+
+Pipeline:
+source code ->
+interpret parsing ->
+bytecode generation ->
+virtual machine execution
+
+Key idea:
+- code is executed at runtime, not precompiled into a standalone binary
+
+---
+
+
+## Git Model
+
+Git is a distributed version control system.
+
+Core states:
+- working directory -> current files
+- staging area -> selected changes
+- commit history -> saved snapshots
+
+Concept:
+- commits represent snapshots of state, not just file saves
+
+---
+
+## .gitignore Behavior
+
+A `.gitignore` file patterns for files Git should ignore.
+
+Key properties:
+- does not delete files
+- only prevents tracking
+- can be overriden by explicit git add
 
 
 
