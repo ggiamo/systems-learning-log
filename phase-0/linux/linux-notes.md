@@ -178,6 +178,26 @@ Example:
 - Moves into `user`
 - Ends at `Documents`
 
+Path types:
+
+Absolute path
+- Starts at root `/`
+- Independent of current location
+- Example:
+```bash
+/home/user/systems-learning-log/phase-0/linux
+```
+
+Relative path
+- Interpreted from current directory
+- Depends on shell state
+- Example:
+```bash
+linux/
+```
+
+
+---
 
 
 
@@ -185,8 +205,7 @@ Example:
 
 ## References
 
-- Linux Journey
-https://labex.io/linuxjourney
+- Linux Journey -- https://labex.io/linuxjourney
 
 - The Linux Command Line -- William Shotts
 

@@ -42,7 +42,9 @@ The terminal is a command interpreter, not a system interface. It converts text 
 
 ### Commands
 
-echo - displays back the text entered as a command in the terminal.
+echo - one of the most basic and frequently used tools in the Linux terminal. Its primary function is to print text or variables to the standard output (usually your screen). 
+
+Basic Usage: To display a simple string of text.
 
 Command:
 ```bash
@@ -53,5 +55,74 @@ Output:
 hello world
 ```
 
+Printing Variables: It is often used to check the value of environment variables.
+
+Command:
+```bash
+echo $USER
+```
+Output:
+```bash
+user
+```
+
+Creating Files: You can combine `echo` with redirection operators (>) to quickly create or overwrite a file with text.
+
+Command:
+```bash
+echo "New log entry" > note.txt
+```
+Output:
+- Nothing is printed to the terminal.
+- 'echo "New log entry"' prints the text 'New log entry' to standard output.
+- stdout = default output stream of a program; programs write output to stdout, not directly to the screen; terminal reads stdout and displays it
+Normal data flow: program -> stdout -> terminal -> screen
+With redirection: program -> stdout -> file
+- `>` (redirection operator) redirects that output into a file instead of the terminal.
+- `note.txt` is the target file (if `note.txt` does not exist then it is created; if `note.txt` already exists then it is overwritten completely which means that its previous contents are erased)
+
 ---
+
+pwd ("print working directory") - outputs the absolute path (the full path starting from `/`) of your current location. It is a vital tool for ensuring you are running commands in the correct place.
+
+Command:
+```bash
+pwd
+```
+Output:
+```bash
+/home/user/projects/systems-learning-log
+```
+
+---
+
+cd ("change directory") - changes your current working directory.
+
+Absolute path navigation:
+
+Input:
+```bash
+cd ~/projects/systems-learning-log/phase-0/linux
+pwd
+```
+Output:
+```bash
+/home/user/projects/systems-learning-log/phase-0/linux
+```
+
+Relative path navigation:
+
+Input:
+```bash
+cd python/hello-world
+pwd
+cd ..
+cd ..
+cd linux/
+pwd
+```
+Output:
+```bash
+/home/user/projects/systems-learning-log/phase-0/linux
+```
 
