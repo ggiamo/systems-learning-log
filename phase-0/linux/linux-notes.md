@@ -246,9 +246,9 @@ Linux filesystems track metadata associated with files.
 
 Common timestamp categories:
 
-access time (atime) -> last file read
-modification time (mtime) -> last content modification
-change time (ctime) -> last metadata change
+- access time (atime) -> last file read
+- modification time (mtime) -> last content modification
+- change time (ctime) -> last metadata change
 
 touch primarily modifies timestamp metadata.
 
