@@ -98,7 +98,19 @@ Output:
 
 cd ("change directory") - changes your current working directory.
 
+Special directory references:
+`.` -> current directory (self-reference)
+`..` -> parent directory (one level up in tree)
+`~` -> home directory (user's root workspace)
+`-` -> previous working directory (shell history state)
+
+
 Absolute path navigation:
+
+Base:
+```bash
+cd ~/projects/systems-learning-log/phase-0
+```
 
 Input:
 ```bash
@@ -111,6 +123,11 @@ Output:
 ```
 
 Relative path navigation:
+
+Base:
+```bash
+cd ~/projects/systems-learning-log/phase-0
+```
 
 Input:
 ```bash
@@ -125,4 +142,65 @@ Output:
 ```bash
 /home/user/projects/systems-learning-log/phase-0/linux
 ```
+---
 
+ls (listing directory contents) - displays files and directories in the current working directory.
+
+Basic usage:
+```bash
+ls
+```
+Behavior:
+- Prints visible files and directories in the current working directory
+
+Listing specific paths:
+```bash
+ls /home
+```
+Behavior:
+- Lists contents of the specified directory instead of current location
+
+Hidden files:
+- Hidden files start with `.` and are not shown by default
+
+```bash
+ls -a
+```
+Behavior:
+- Includes hidden files and directories
+- Being hidden does not mean it is inaccessible nor requires special permissoins: it merely affects default visibility
+
+Long listing format:
+```bash
+ls -l
+```
+Behavior:
+- Displays detailed metadata:
+permissions
+number of links
+owner
+group
+file size
+timestamp
+name
+- `ls -l` exposes filesystem metdata, not just names
+
+Reverse order listing:
+```bash
+ls -r
+```
+Behavior:
+- Reverses alphabetical output order
+- Does not modify filesystem data
+
+Combined flags:
+```bash
+ls -la
+ls -al
+ls -lar
+```
+Behavior:
+`-l` -> detailed view
+`-a` -> include hidden files
+`-r` -> reverse ordering
+- Flags are composable modifiers of a single command behavior
