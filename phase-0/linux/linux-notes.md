@@ -165,7 +165,7 @@ A `.gitignore` file patterns for files Git should ignore.
 Key properties:
 - does not delete files
 - only prevents tracking
-- can be overriden by explicit git add
+- can be overridden by explicit git add
 
 
 
