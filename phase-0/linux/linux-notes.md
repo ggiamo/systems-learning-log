@@ -50,6 +50,21 @@ Common system directories:
 
 ---
 
+## Filesystem Operations Model
+
+Linux filesystem behavior is driven by operations on directory entries and metadata rather than "files as objects".
+
+Core operations:
+
+- mkdir -> creates a directory entry mapping a name to inode metadata
+- rm -> removes directory entry (data may persist until overwritten)
+- cp -> creates a new inode with duplicated data
+- mv -> changes directory entry reference (same inode, new path)
+
+Most filesystem commands do not "modify files directly". They manipulate references (names -> inodes) or create new inodes.
+
+---
+
 ## Path System
 
 A path describes how to locate a file in the filesystem tree. 
@@ -82,6 +97,23 @@ Parent-child relationship:
 
 ---
 
+## Standard Streams Model
+
+Every process is connected to three defaul data streams:
+
+- stdin -> input stream (keyboard / piped input)
+- stdout -> output stream (terminal display / pipe output)
+- stderr -> error output stream
+
+Commands like:
+cat, grep, find
+
+operate primarily by reading from stdin or files and writing to stdout
+
+Linux tools are designed to be chained using pipes rather than used in isolation.
+
+---
+
 ## Shell Model (Bash)
 
 A shell is a user-space program that interprets commands.
@@ -107,6 +139,30 @@ When a command is typed:
 - shell searches each directory PATH
 - first matching executable is executed
 - if none found -> "command not found"
+
+---
+
+## Command-Line Tool Behavior Model
+
+Most Linux utilities follow a consistent behavioral pattern:
+
+1. Accept input from:
+- files
+- stdin
+- arguments
+
+2. Process data in memory (stream-based or buffered)
+
+3. Output results to stdout
+
+Examples:
+
+- cat -> streams file content
+- grep -> filters lines matching patterns
+- find -> traverses filesystem tree
+- clear -> modifies terminal display buffer only
+
+Linux commands are small composable programs designed for pipelines, not monolithic applications.
 
 ---
 
@@ -158,6 +214,22 @@ Concept:
 
 ---
 
+## Filesystem vs Git State Distinctin
+
+Filesystem state and Git state are independent layers:
+
+Filesystem:
+- actual files and directories
+- changes immediately reflect in disk state
+
+Git:
+- tracks snapshots of filesystem state
+- only records changes when explicitly staged and committed
+
+Creating, modifying, or deleting files does not affect Git history unless staged.
+
+---
+
 ## .gitignore Behavior
 
 A `.gitignore` file patterns for files Git should ignore.
@@ -172,7 +244,7 @@ Key properties:
 
 Linux filesystems track metadata associated with files.
 
-Common timestamp categoies:
+Common timestamp categories:
 
 access time (atime) -> last file read
 modification time (mtime) -> last content modification
@@ -184,7 +256,29 @@ Important distinction:
 
 updating timestamps does not necessarily modify file contents
 
+---
 
+## Core Behavioral Model of Linux
+
+Linux can be understood as three interacting layers:
+
+1. Filesystem layer
+- directory entries
+- inodes
+- metadata (timestamps, permissions)
+
+2. Process layer
+- execution instances
+- memory space
+- PID-based isolation
+
+3. Tool layer
+- small programs operating on streams and files
+- composable via pipes and redirection
+
+Most "commands" are not system features--they are user-space programs interacting with these layers.
+
+---
 
 
 ## References

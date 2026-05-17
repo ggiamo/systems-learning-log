@@ -600,3 +600,90 @@ grep "process" linux/linux-notes.md
 ```
 
 Output:
+```bash
+- Separate process table
+A process is a running instance of a program.
+- it becomes a process
+- it is assigned a PID (process ID)
+- processes are isolated from each other unless explicitly connected
+- a shell creates child processes when launching commands
+4. launches processes
+- a shell is an interface to OS process management
+preprocessing ->
+process execution
+```
+
+Observation:
+
+- Searches input text for matching patterns and outputs matching lines.
+
+
+**`grep` - recursive search**
+
+Input:
+```bash
+grep -r "timestamp"
+```
+
+Output:
+```bash
+linux/linux-notes-archive.md:Common timestamp categories:
+linux/linux-notes-archive.md:touch primarily modifies timestamp metadata.
+linux/linux-notes-archive.md:updating timestamps does not necessarily modify file contents
+```
+
+Observation:
+
+- -r recursively searches files inside directories.
+
+---
+
+**`find` - filesystem search**
+
+Input:
+```bash
+find . -name "*.md"
+```
+
+Output:
+```bash
+./python/hello-world/notes.md
+./c/hello-world/notes.md
+./linux/toolchain-verification.md
+./linux/linux-notes-archive.md
+./linux/terminal-commands.md
+./linux/linux-notes.md
+./linux/vm-setup.md
+./backups/hello-world/notes.md
+```
+
+Observation:
+
+- Searches filesystem tree recursively using matching conditions.
+
+
+**`find` directories only**
+
+Input:
+```bash
+find . -type d
+```
+
+Output:
+```bash
+.
+./python
+./python/hello-world
+./c
+./c/hello-world
+./linux
+./backups
+./backups/hello-world
+```
+
+Observation:
+
+- type d restricts results to directory entries only.
+
+---
+
