@@ -1,12 +1,12 @@
 ## Python Execution Test
 
 Command:
-```bash
+```python
 python3 hello.py
 ```
 
 Output:
-```bash
+```python
 hello world
 ```
 
@@ -20,8 +20,8 @@ Observation:
 - Each line is read and executed at runtime
 
 Example:
-```bash
-python 3 hello.py
+```python
+python3 hello.py
 ```
 
 Observation: The interpreter processes the source code directly and runs it immediately.

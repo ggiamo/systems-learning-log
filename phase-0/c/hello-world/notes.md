@@ -1,17 +1,17 @@
 ## C Compilation Test
 
 Command:
-```bash
+```c
 gcc hello.c -o hello
 ```
 
 Run:
-```bash
+```c
 ./hello
 ```
 
 Output:
-```bash
+```c
 hello world
 ```
 
@@ -26,7 +26,7 @@ Observation:
 - Produces an executable file that runs independently
 
 Example:
-```bash
+```c
 gcc hello.c -o hello
 ./hello
 ```

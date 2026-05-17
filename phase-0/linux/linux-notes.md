@@ -151,3 +151,42 @@ The $ symbol indicates that the terminal is ready to accept commands.
 
 ## The Directory Tree in Linux
 
+Everything in Linux is treated like a file. These files are organized into a logical, branching hierarchy known as the Filesystem Hierarchy Standard (FHS).
+
+The structure begins at a single point of origin called the root directory, represented by a forward slash (/). Every other folder and file branches out from this room, creating a tree-like architecture.
+
+Common top-level directories include:
+- `/bin`: Essential command binaries (short for "binary"; contains the fundamental executable programs like ls, cp, and bash that all users need).
+
+- `/etc`: System-wide configuration files (et cetera; the central hub for system configuration files that dictate how the OS and applications behave).
+
+- `/home`: Personal folders for users (the personal storage space where individual users keep their private documents, settings, and media).
+
+- `/var`: Variable data like logs and temporary files (variable data; a location for files that change constantly during system operation, such has system logs and print spools).
+
+---
+
+A path is the specific "address" of a file or folder. It maps the sequence of directories you must traverse to reach a destination.
+
+Example:
+```bash
+/home/user/Documents
+```
+
+- Starts at root (/)
+- Moves into `home`
+- Moves into `user`
+- Ends at `Documents`
+
+
+
+
+
+
+## References
+
+- Linux Journey
+https://labex.io/linuxjourney
+
+- The Linux Command Line -- William Shotts
+
