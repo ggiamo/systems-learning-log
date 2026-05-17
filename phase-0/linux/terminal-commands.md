@@ -37,3 +37,21 @@ PATH is a list of directories the shell searches when I type a command. Without 
 ## Important realization
 
 The terminal is a command interpreter, not a system interface. It converts text into process execution.
+
+---
+
+### Commands
+
+echo - displays back the text entered as a command in the terminal.
+
+Command:
+```bash
+echo hello world
+```
+Output:
+```bash
+hello world
+```
+
+---
+

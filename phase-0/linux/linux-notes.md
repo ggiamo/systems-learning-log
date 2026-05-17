@@ -127,12 +127,27 @@ This separates:
 
 ## Bash
 
-Bash is a shell used to interact with Linux through terminal commands.
+A shell is a program that accepts commands and passes them to the operating system to execute. Bash is the default shell used to interact with most Linux distributions through terminal commands. Other shells such as ksh, zsh, and tsch exist.
 
 The shell:
 - accepts user commands
-- located executables
+- locates executables
 - starts programs
 - displays output
 
-Markdown code blocks labeled with `bash` are only for syntax highling and do not execute commands themselves.
+Markdown code blocks labeled with `bash` are only for syntax highlighting and do not execute commands themselves.
+
+---
+
+## The Shell Prompt
+
+When a terminal is opened, the shell prompt will appear. It will usually follow this format: 
+```bash
+username@hostname:current_directory$
+```
+The $ symbol indicates that the terminal is ready to accept commands. 
+
+---
+
+## The Directory Tree in Linux
+
